@@ -458,12 +458,13 @@ stsom=$(ps x | grep "shutdown -r 16:00"|grep -v grep > /dev/null && echo -e "\03
 autm=$(grep "menu;" /etc/profile > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
 clear
 echo -e "\033[0;34m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
-[[ ! -e /tmp/att ]]  && {
+[[ ! -e /tmp/att ]]  && {
 var01='\033[1;32m⚠'
-echo -e "\033[0;34m┃                   \033[38;5;118mSCRIPT DO SHUMELO SSH\033                  \033[0;34m┃\E[0m"
+# Título: Sistema de Gestión de Servidor SSH (Centrado)
+echo -e "\033[0;34m┃        \033[1;37m• \033[38;5;118mMENÚ DE GESTIÓN AVANZADA SSH\033[1;37m •          \033[0;34m┃\E[0m"
 var01='\033[1;37m•'
 } || {
-echo -e "\033[0;34m┃          \033[1;37m[\033[1;31m!\033[1;37m]  \033[1;31mEXISTE UMA ATUALIZACAO DISPONIVEL  \033[1;37m[\033[1;31m!\033[1;37m]\033[0m         \033[0;34m┃"
+echo -e "\033[0;34m┃          \033[1;37m[\033[1;31m!\033[1;37m]  \033[1;31mEXISTE UMA ATUALIZACAO DISPONIVEL  \033[1;37m[\033[1;31m!\033[1;37m]\033[0m         \033[0;34m┃"
 }
 echo -e "\033[0;34m┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\033[0m"
 echo -e "\033[0;34m┃\033[38;5;82mSistema              \033[1;37m| \033[38;5;82mMemória Ram           \033[1;37m| \033[38;5;82mProcessador    \033[0;34m┃"
