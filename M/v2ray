@@ -284,9 +284,40 @@ main() {
 
     updateProject
 
-    profileInit
+    profileInit() {
 
-    installFinish
+    # Limpiar variables de entorno del módulo v2ray
+    [[ $(grep v2ray ~/$ENV_FILE) ]] && sed -i '/v2ray/d' ~/$ENV_FILE && source ~/$ENV_FILE
+
+    # Resolver problema de visualización de caracteres chinos en Python3
+    [[ -z $(grep PYTHONIOENCODING=utf-8 ~/$ENV_FILE) ]] && echo "export PYTHONIOENCODING=utf-8" >> ~/$ENV_FILE && source ~/$ENV_FILE
+
+    # Nueva configuración de instalación
+    if [[ ${INSTALL_WAY} == 0 ]]; then
+        v2ray new
+        
+        # === INICIO DE MODIFICACIÓN SOLICITADA ===
+        CONFIG_FILE="/etc/v2ray/config.json"
+        
+        if [ -f "$CONFIG_FILE" ]; then
+            colorEcho ${YELLOW} "Modificando path de WebSocket a / en $CONFIG_FILE..."
+            
+            # Buscar y reemplazar el valor actual de "path" (ej: "/ws") por "/"
+            # Uso de 'sed' para manipular JSON de forma segura.
+            # Busca la línea que contiene "path" y cambia su valor a "/".
+            sed -i 's|"path":\s*".*"|"path": "/"|g' "$CONFIG_FILE"
+            
+            # Si el archivo de config de V2Ray existe, reiniciar el servicio para aplicar el cambio
+            systemctl restart v2ray >/dev/null 2>&1
+            
+            colorEcho ${GREEN} "Path modificado a / ¡Éxito!"
+        else
+            colorEcho ${RED} "Error: Archivo de configuración V2Ray no encontrado en $CONFIG_FILE"
+        fi
+        # === FIN DE MODIFICACIÓN SOLICITADA ===
+    fi
+
+    echo ""
 }
 
 main
